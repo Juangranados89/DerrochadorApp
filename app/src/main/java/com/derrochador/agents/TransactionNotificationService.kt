@@ -22,6 +22,13 @@ class TransactionNotificationService : NotificationListenerService() {
     companion object {
         private const val TAG = "WatcherAgent"
 
+        /** Package names of generic SMS/messaging apps that may relay bank SMS. */
+        val MESSAGING_PACKAGES = setOf(
+            "com.google.android.apps.messaging",
+            "com.samsung.android.messaging",
+            "com.android.mms"
+        )
+
         /**
          * Package names of known banking and fintech apps to monitor.
          * This list covers major Latin American banks and payment platforms.
@@ -37,12 +44,8 @@ class TransactionNotificationService : NotificationListenerService() {
             "com.citibanamex.banamexmobile",
             // Payment platforms
             "com.nequi.MobileApp",
-            "com.mercadopago.wallet",
-            // Generic SMS apps (for bank SMS)
-            "com.google.android.apps.messaging",
-            "com.samsung.android.messaging",
-            "com.android.mms"
-        )
+            "com.mercadopago.wallet"
+        ) + MESSAGING_PACKAGES
     }
 
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -125,11 +128,7 @@ class TransactionNotificationService : NotificationListenerService() {
     }
 
     private fun isMessagingApp(packageName: String): Boolean {
-        return packageName in setOf(
-            "com.google.android.apps.messaging",
-            "com.samsung.android.messaging",
-            "com.android.mms"
-        )
+        return packageName in MESSAGING_PACKAGES
     }
 
     override fun onDestroy() {
