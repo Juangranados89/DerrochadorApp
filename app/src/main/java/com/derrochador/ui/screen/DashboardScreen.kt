@@ -23,9 +23,6 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-private val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "MX"))
-private val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("es", "MX"))
-
 fun categoryColor(categoryName: String): Color = when (categoryName) {
     ExpenseCategory.FOOD.name -> CategoryFood
     ExpenseCategory.TRANSPORT.name -> CategoryTransport
@@ -140,6 +137,7 @@ fun DashboardScreen(
 
 @Composable
 private fun DailySummaryCard(uiState: DashboardUiState) {
+    val currencyFormat = remember { NumberFormat.getCurrencyInstance(Locale("es", "MX")) }
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -179,6 +177,7 @@ private fun DailySummaryCard(uiState: DashboardUiState) {
 private fun CategoryBreakdownCard(uiState: DashboardUiState) {
     val totals = uiState.dailySummary?.categoryTotals ?: return
     val maxTotal = totals.maxOfOrNull { it.total } ?: 1.0
+    val currencyFormat = remember { NumberFormat.getCurrencyInstance(Locale("es", "MX")) }
 
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -237,6 +236,8 @@ fun TransactionCard(
     onDelete: (Transaction) -> Unit
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
+    val currencyFormat = remember { NumberFormat.getCurrencyInstance(Locale("es", "MX")) }
+    val dateFormat = remember { SimpleDateFormat("dd/MM/yyyy HH:mm", Locale("es", "MX")) }
 
     if (showDeleteDialog) {
         AlertDialog(

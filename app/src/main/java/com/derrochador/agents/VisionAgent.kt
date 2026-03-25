@@ -22,7 +22,6 @@ import java.io.File
 import javax.inject.Inject
 
 private const val TAG = "VisionAgent"
-private val AMOUNT_REGEX = Regex("""[$\$]?\s*\d{1,3}(?:[,.]?\d{3})*(?:[.,]\d{2})?""")
 
 @AndroidEntryPoint
 class VisionAgent : Service() {
@@ -102,16 +101,6 @@ class VisionAgent : Service() {
                 Log.e(TAG, "Error reading image file: ${e.message}", e)
             }
         }
-    }
-
-    private fun extractAmount(text: String): Double {
-        val match = AMOUNT_REGEX.find(text) ?: return 0.0
-        return match.value
-            .replace("$", "")
-            .replace(",", "")
-            .replace(" ", "")
-            .trim()
-            .toDoubleOrNull() ?: 0.0
     }
 
     override fun onDestroy() {

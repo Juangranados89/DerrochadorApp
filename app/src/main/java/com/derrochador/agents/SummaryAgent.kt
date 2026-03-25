@@ -1,5 +1,6 @@
 package com.derrochador.agents
 
+import com.derrochador.domain.model.ExpenseCategory
 import com.derrochador.domain.usecase.DailySummary
 import com.derrochador.domain.usecase.GetDailySummaryUseCase
 import java.text.NumberFormat
@@ -36,7 +37,9 @@ class SummaryAgent @Inject constructor(
 
     private suspend fun generateLlmSummary(summary: DailySummary): String {
         val expensesText = summary.categoryTotals.joinToString("\n") { ct ->
-            "- ${ct.category}: ${currencyFormat.format(ct.total)}"
+            val displayName = ExpenseCategory.values()
+                .firstOrNull { it.name == ct.category }?.displayName ?: ct.category
+            "- $displayName: ${currencyFormat.format(ct.total)}"
         }
         val totalText = currencyFormat.format(summary.totalAmount)
         val prompt = SUMMARY_PROMPT_TEMPLATE
@@ -54,7 +57,9 @@ class SummaryAgent @Inject constructor(
         val total = currencyFormat.format(summary.totalAmount)
         val topCategory = summary.categoryTotals.maxByOrNull { it.total }
         val topCategoryText = topCategory?.let {
-            "Tu mayor gasto fue en ${it.category} (${currencyFormat.format(it.total)})."
+            val displayName = ExpenseCategory.values()
+                .firstOrNull { v -> v.name == it.category }?.displayName ?: it.category
+            "Tu mayor gasto fue en $displayName (${currencyFormat.format(it.total)})."
         } ?: ""
         return "Hoy gastaste un total de $total. $topCategoryText"
     }

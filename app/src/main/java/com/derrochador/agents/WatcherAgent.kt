@@ -27,8 +27,6 @@ private val BANKING_PACKAGES = setOf(
     "com.nubank.nubank"
 )
 
-private val AMOUNT_REGEX = Regex("""[$\$]?\s*\d{1,3}(?:[,.]?\d{3})*(?:[.,]\d{2})?""")
-
 @AndroidEntryPoint
 class WatcherAgent : NotificationListenerService() {
 
@@ -67,15 +65,5 @@ class WatcherAgent : NotificationListenerService() {
             )
             saveTransactionUseCase(transaction)
         }
-    }
-
-    private fun extractAmount(text: String): Double {
-        val match = AMOUNT_REGEX.find(text) ?: return 0.0
-        val raw = match.value
-            .replace("$", "")
-            .replace(",", "")
-            .replace(" ", "")
-            .trim()
-        return raw.toDoubleOrNull() ?: 0.0
     }
 }

@@ -11,6 +11,12 @@ import java.io.FileOutputStream
 import java.net.URL
 
 private const val TAG = "ModelDownloadWorker"
+
+private val ALLOWED_HOSTS = setOf(
+    "storage.googleapis.com",
+    "huggingface.co",
+    "kaggle.com"
+)
 const val KEY_MODEL_URL = "model_url"
 const val KEY_MODEL_PATH = "model_path"
 
@@ -24,6 +30,13 @@ class ModelDownloadWorker @AssistedInject constructor(
         val modelUrl = inputData.getString(KEY_MODEL_URL) ?: return Result.failure(
             workDataOf("error" to "No model URL provided")
         )
+
+        val parsedUrl = try { URL(modelUrl) } catch (e: Exception) {
+            return Result.failure(workDataOf("error" to "Invalid model URL"))
+        }
+        if (parsedUrl.host !in ALLOWED_HOSTS) {
+            return Result.failure(workDataOf("error" to "Model URL host not allowed: ${parsedUrl.host}"))
+        }
         val modelPath = inputData.getString(KEY_MODEL_PATH)
             ?: "${applicationContext.filesDir.absolutePath}/gemma-2b-it-cpu-int4.bin"
 
