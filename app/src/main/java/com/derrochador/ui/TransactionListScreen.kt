@@ -21,6 +21,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -94,8 +95,8 @@ fun TransactionListScreen(viewModel: TransactionListViewModel) {
 
 @Composable
 fun TransactionCard(transaction: TransactionEntity) {
-    val currencyFormat = NumberFormat.getCurrencyInstance(Locale("es", "CO"))
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+    val currencyFormat = remember { NumberFormat.getCurrencyInstance(Locale("es", "CO")) }
+    val dateFormat = remember { SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()) }
 
     Card(
         modifier = Modifier.fillMaxWidth(),

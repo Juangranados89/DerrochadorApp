@@ -11,6 +11,11 @@ object NotificationParser {
         val description: String
     )
 
+    private val DESC_PATTERNS = listOf(
+        Regex("""(?i)(?:en|comercio|establecimiento)\s+(.+?)(?:\.|,|\s+por|\s+el|\s+a\s+las|$)"""),
+        Regex("""(?i)(?:compra|pago|transferencia)\s+(?:en\s+)?(.+?)(?:\.|,|\s+por|$)""")
+    )
+
     private val AMOUNT_PATTERNS = listOf(
         // Patterns like "$1,234.56" or "$1.234,56" or "COP 1,234"
         Regex("""(?i)(?:cop|usd|mxn|ars)?\s*\$?\s*([\d.,]+)"""),
@@ -66,12 +71,7 @@ object NotificationParser {
     }
 
     private fun extractDescription(text: String): String {
-        // Try to extract merchant/description from common patterns
-        val descPatterns = listOf(
-            Regex("""(?i)(?:en|comercio|establecimiento)\s+(.+?)(?:\.|,|\s+por|\s+el|\s+a\s+las|$)"""),
-            Regex("""(?i)(?:compra|pago|transferencia)\s+(?:en\s+)?(.+?)(?:\.|,|\s+por|$)""")
-        )
-        for (pattern in descPatterns) {
+        for (pattern in DESC_PATTERNS) {
             val match = pattern.find(text)
             if (match != null) {
                 return match.groupValues[1].trim().take(100)
