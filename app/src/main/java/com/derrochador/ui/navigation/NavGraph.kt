@@ -35,7 +35,9 @@ fun NavGraph() {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     val currentDestination = navController.currentBackStackEntryAsState().value?.destination
-    val showBottomBar = bottomNavItems.any { it.route == currentDestination?.route }
+    val showBottomBar by remember(currentDestination) {
+        derivedStateOf { bottomNavItems.any { it.route == currentDestination?.route } }
+    }
 
     Scaffold(
         bottomBar = {

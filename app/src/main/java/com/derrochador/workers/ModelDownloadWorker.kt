@@ -24,7 +24,8 @@ class ModelDownloadWorker @AssistedInject constructor(
         val modelUrl = inputData.getString(KEY_MODEL_URL) ?: return Result.failure(
             workDataOf("error" to "No model URL provided")
         )
-        val modelPath = inputData.getString(KEY_MODEL_PATH) ?: "/data/local/tmp/gemma-2b-it-cpu-int4.bin"
+        val modelPath = inputData.getString(KEY_MODEL_PATH)
+            ?: "${applicationContext.filesDir.absolutePath}/gemma-2b-it-cpu-int4.bin"
 
         return try {
             val outputFile = File(modelPath)

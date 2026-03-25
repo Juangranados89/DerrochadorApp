@@ -11,9 +11,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val TAG = "BrainAgent"
-private const val MODEL_PATH = "/data/local/tmp/gemma-2b-it-cpu-int4.bin"
+private const val MODEL_FILENAME = "gemma-2b-it-cpu-int4.bin"
 
-val CATEGORIZATION_PROMPT_TEMPLATE = """
+const val CATEGORIZATION_PROMPT_TEMPLATE = """
 Eres un agente financiero. Clasifica la siguiente transacción en una de estas categorías:
 FOOD, TRANSPORT, TRANSFER, SHOPPING, ENTERTAINMENT, HEALTH, UTILITIES, OTHER.
 
@@ -37,8 +37,9 @@ class BrainAgent @Inject constructor(
 
     private fun tryInitModel() {
         try {
+            val modelPath = "${context.filesDir.absolutePath}/$MODEL_FILENAME"
             val options = LlmInference.LlmInferenceOptions.builder()
-                .setModelPath(MODEL_PATH)
+                .setModelPath(modelPath)
                 .setMaxTokens(512)
                 .build()
             llmInference = LlmInference.createFromOptions(context, options)

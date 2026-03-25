@@ -46,15 +46,17 @@ class VisionAgent : Service() {
 
     private fun startObserving() {
         val whatsappDir = File(
-            android.os.Environment.getExternalStorageDirectory(),
-            "Pictures/WhatsApp"
+            android.os.Environment.getExternalStoragePublicDirectory(
+                android.os.Environment.DIRECTORY_PICTURES
+            ),
+            "WhatsApp"
         )
         if (!whatsappDir.exists()) {
             Log.w(TAG, "WhatsApp pictures directory not found")
             return
         }
 
-        fileObserver = object : FileObserver(whatsappDir, CREATE or CLOSE_WRITE) {
+        fileObserver = object : FileObserver(whatsappDir, FileObserver.CREATE or FileObserver.CLOSE_WRITE) {
             override fun onEvent(event: Int, path: String?) {
                 if (path == null) return
                 if (!path.endsWith(".jpg", ignoreCase = true) &&

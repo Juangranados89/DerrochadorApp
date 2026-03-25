@@ -7,7 +7,7 @@ import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
-private val SUMMARY_PROMPT_TEMPLATE = """
+private const val SUMMARY_PROMPT_TEMPLATE = """
 Eres un asistente financiero personal en español. Basándote en estos gastos del día:
 
 {EXPENSES}
