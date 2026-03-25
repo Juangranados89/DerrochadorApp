@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Derrochador</string>
+    <string name="watcher_service_label">Agente Oídos</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_title">Inicio</string>
+    <string name="daily_summary_title">Resumen de hoy</string>
+    <string name="recent_transactions">Transacciones recientes</string>
+    <string name="no_transactions">Sin transacciones aún.\nAgrega una con el botón +</string>
+    <string name="ai_model_active">IA local activa</string>
+    <string name="ai_model_basic">IA: modo básico</string>
+
+    <!-- Categories -->
+    <string name="category_food">Comida</string>
+    <string name="category_transport">Transporte</string>
+    <string name="category_transfer">Transferencia</string>
+    <string name="category_shopping">Compras</string>
+    <string name="category_entertainment">Entretenimiento</string>
+    <string name="category_health">Salud</string>
+    <string name="category_utilities">Servicios</string>
+    <string name="category_other">Otro</string>
+
+    <!-- Add Transaction -->
+    <string name="add_transaction_title">Agregar gasto</string>
+    <string name="amount_label">Monto</string>
+    <string name="description_label">Descripción</string>
+    <string name="description_hint">Ej: Almuerzo en restaurante</string>
+    <string name="category_label">Categoría</string>
+    <string name="save_expense">Guardar gasto</string>
+    <string name="invalid_amount">Ingresa un monto válido</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Configuración</string>
+    <string name="ai_model_title">Modelo de IA local</string>
+    <string name="ai_model_active_desc">Gemma 2B activo</string>
+    <string name="ai_model_inactive_desc">No disponible — modo básico activo</string>
+    <string name="watcher_agent_title">Agente Oídos</string>
+    <string name="watcher_agent_desc">Monitorear notificaciones bancarias</string>
+    <string name="vision_agent_title">Agente Ojos</string>
+    <string name="vision_agent_desc">Detectar capturas de WhatsApp</string>
+    <string name="permissions_title">Permisos</string>
+    <string name="notification_access">Acceso a notificaciones</string>
+    <string name="app_permissions">Permisos de la aplicación</string>
+
+    <!-- Common -->
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Eliminar</string>
+    <string name="refresh">Actualizar</string>
+    <string name="back">Atrás</string>
+    <string name="all">Todas</string>
+    <string name="delete_transaction_title">Eliminar transacción</string>
+    <string name="delete_transaction_message">¿Deseas eliminar esta transacción?</string>
+</resources>
